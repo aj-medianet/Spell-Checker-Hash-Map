@@ -139,7 +139,7 @@ void hashMapDelete(HashMap* map)
 int* hashMapGet(HashMap* map, const char* key) {
     assert(map != NULL);
     assert(key != NULL);
-    printf("in get function\n");
+    printf("in get function, key: %c\n", *key);
 
     int hashIndex = HASH_FUNCTION(key) % map->capacity;
     if(hashIndex < 0) {
@@ -190,6 +190,12 @@ void resizeTable(HashMap* map, int capacity) {
             cur = cur->next;
         }
     }
+
+    map->table = newMap->table;
+    map->capacity = capacity;
+    free(newMap);
+
+    printf("after resize capacity is: %d\n", hashMapCapacity(map));
 }
 
 /**
@@ -231,7 +237,7 @@ void hashMapPut(HashMap* map, const char* key, int value) {
         cur = cur->next;
     }
     
-    //create new link
+    //if key doesn't already exist, create new link
     HashLink *newLink = hashLinkNew(key, value, map->table[hashIndex]);
     assert(newLink); 
 
@@ -253,7 +259,7 @@ void hashMapPut(HashMap* map, const char* key, int value) {
  */
 void hashMapRemove(HashMap* map, const char* key) {
     assert(map != NULL);
-    printf("in remove function\n");
+    printf("in remove function, key: %c\n", *key);
 
 
     int hashIndex = HASH_FUNCTION(key) % map->capacity;
@@ -272,12 +278,11 @@ void hashMapRemove(HashMap* map, const char* key) {
             hashLinkDelete(cur);
             map->size--;
             printf("size after remove: %d\n", map->size);
-            return;
-        } else {
-            cur = cur->next;
+            return;   
         }
+        cur = cur->next;
     }
-    printf("size after remove: %d\n", map->size);
+    printf("did not remove");
 }
 
 /**
@@ -342,8 +347,14 @@ int hashMapCapacity(HashMap* map) {
  * @return Number of empty buckets.
  */
 int hashMapEmptyBuckets(HashMap* map) {
-    printf("empty buckets: %d\n", abs(map->capacity - map->size));
-    return abs(map->capacity - map->size);
+    int count = 0;
+    for(int i = 0; i < map->capacity; i++) {
+        if(map->table[i] == NULL) {
+            count++;
+        }
+    }
+    printf("empty buckets: %d\n", count);
+    return count;
 }
 
 /**
