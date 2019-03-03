@@ -141,10 +141,8 @@ int* hashMapGet(HashMap* map, const char* key) {
     assert(key != NULL);
     printf("in get function, key: %c\n", *key);
 
-    int hashIndex = HASH_FUNCTION(key) % map->capacity;
-    if(hashIndex < 0) {
-        hashIndex += map->capacity;
-    }
+    //get hash index
+    int hashIndex = abs(HASH_FUNCTION(key) % map->capacity);
 
     //set pointer to head of linked list at hashIndex
     struct HashLink *cur = map->table[hashIndex];
@@ -191,9 +189,11 @@ void resizeTable(HashMap* map, int capacity) {
         }
     }
 
-    map->table = newMap->table;
-    map->capacity = capacity;
-    free(newMap);
+    hashMapCleanUp(map); //delete indexes of old map
+
+    map->table = newMap->table; //set map table to new map table
+    map->capacity = capacity; //update capacity
+    free(newMap); //free newMap
 
     printf("after resize capacity is: %d\n", hashMapCapacity(map));
 }
@@ -217,12 +217,8 @@ void hashMapPut(HashMap* map, const char* key, int value) {
     printf("in put function\n");
     printf("key: %c value: %d \n\n",*key,value);
    
-    //get hash value
-    int hashIndex = HASH_FUNCTION(key) % map->capacity;
-    if(hashIndex < 0) {
-        hashIndex += map->capacity;
-    }
-    //hello
+    //get hash index
+    int hashIndex = abs(HASH_FUNCTION(key) % map->capacity);
 
     //check if already exists
     struct HashLink *cur = map->table[hashIndex];
@@ -241,7 +237,9 @@ void hashMapPut(HashMap* map, const char* key, int value) {
     HashLink *newLink = hashLinkNew(key, value, map->table[hashIndex]);
     assert(newLink); 
 
-    map->table[hashIndex] = newLink; //add to bucket
+    //add to bucket
+    map->table[hashIndex] = newLink; 
+
     map->size++;  
 
     //check load
@@ -261,11 +259,8 @@ void hashMapRemove(HashMap* map, const char* key) {
     assert(map != NULL);
     printf("in remove function, key: %c\n", *key);
 
-
-    int hashIndex = HASH_FUNCTION(key) % map->capacity;
-    if(hashIndex < 0) {
-        hashIndex += map->capacity;
-    }
+    //get hash index
+    int hashIndex = abs(HASH_FUNCTION(key) % map->capacity);
 
     //set a link to head of hash table index
     struct HashLink *cur = map->table[hashIndex];
@@ -282,7 +277,8 @@ void hashMapRemove(HashMap* map, const char* key) {
         }
         cur = cur->next;
     }
-    printf("did not remove");
+    map->size--;    
+    printf("did not remove\n\n");
 }
 
 /**
@@ -299,10 +295,8 @@ int hashMapContainsKey(HashMap* map, const char* key) {
     assert(map != NULL);
     printf("in contains function, key: %c\n", *key);
 
-    int hashIndex = HASH_FUNCTION(key) % map->capacity;
-    if(hashIndex < 0) {
-        hashIndex += map->capacity;
-    }
+    //get hash index
+    int hashIndex = abs(HASH_FUNCTION(key) % map->capacity);
 
     //set a link to head of hash table index
     struct HashLink *cur = map->table[hashIndex];
@@ -354,6 +348,7 @@ int hashMapEmptyBuckets(HashMap* map) {
         }
     }
     printf("empty buckets: %d\n", count);
+
     return count;
 }
 
