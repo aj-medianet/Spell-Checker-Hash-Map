@@ -215,6 +215,7 @@ void hashMapPut(HashMap* map, const char* key, int value) {
     if(hashIndex < 0) {
         hashIndex += map->capacity;
     }
+    //hello
 
     //check if already exists
     struct HashLink *cur = map->table[hashIndex];
