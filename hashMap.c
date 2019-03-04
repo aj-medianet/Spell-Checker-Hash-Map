@@ -237,18 +237,21 @@ void hashMapPut(HashMap* map, const char* key, int value) {
             last = cur;
             cur = cur->next;
         }
-    } 
+        //if key doesn't already exist, create new link
+        HashLink *newLink = hashLinkNew(key, value, NULL);
+        assert(newLink); 
 
-    //if key doesn't already exist, create new link
-    HashLink *newLink = hashLinkNew(key, value, NULL);
-    assert(newLink); 
+        //add to bucket
+        last->next = newLink;
+    } else {
+        //if key doesn't already exist, create new link
+        HashLink *newLink = hashLinkNew(key, value, NULL);
+        assert(newLink); 
 
-    //add to bucket
-    last->next = newLink;
-    map->table[hashIndex] = newLink; 
+        //add to bucket
+        map->table[hashIndex] = newLink; 
+    }
     map->size++; 
-    
-
 
     //check load
     if(hashMapTableLoad(map) >= MAX_TABLE_LOAD) {
@@ -267,7 +270,7 @@ void hashMapRemove(HashMap* map, const char* key) {
     assert(map != NULL);
     printf("in remove function, key: %c\n", *key);
     printf("size before remove: %d\n", map->size);
-    //if(strcmp("a",key)) {return;}
+
     //get hash index
     int hashIndex = abs(HASH_FUNCTION(key) % map->capacity);
 
@@ -277,22 +280,16 @@ void hashMapRemove(HashMap* map, const char* key) {
     //loop through linked list in hashed index
     while (cur != NULL) {
         if(strcmp(key, cur->key) == 0) {
-            hashMapContainsKey(map,"c");
-            printf("\n\n\n\n");
             //remove link
             map->table[hashIndex] = cur->next;
             hashLinkDelete(cur);
             map->size--;
             printf("size after remove: %d\n", map->size);
             hashMapContainsKey(map,"c");
-            printf("\n\n\n\n");
             return;   
         }
         cur = cur->next;
     }
-
-    printf("did not remove, size: %d\n\n",map->size);
-    printf("not removed key: %c contains: %d\n\n\n\n",*key,hashMapContainsKey(map, key));
 }
 
 /**
