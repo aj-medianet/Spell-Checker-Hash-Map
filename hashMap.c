@@ -97,6 +97,7 @@ void hashMapCleanUp(HashMap* map) {
             struct HashLink *tmp = cur;
             cur = cur->next;
             hashLinkDelete(tmp);
+            map->size--;
         }
     }
 }
@@ -193,6 +194,7 @@ void resizeTable(HashMap* map, int capacity) {
 
     map->table = newMap->table; //set map table to new map table
     map->capacity = capacity; //update capacity
+    map->size = newMap->size; //reset size after using put function
     free(newMap); //free newMap
 
     printf("after resize capacity is: %d\n", hashMapCapacity(map));
@@ -239,7 +241,6 @@ void hashMapPut(HashMap* map, const char* key, int value) {
 
     //add to bucket
     map->table[hashIndex] = newLink; 
-
     map->size++;  
 
     //check load
@@ -278,7 +279,7 @@ void hashMapRemove(HashMap* map, const char* key) {
         cur = cur->next;
     }
     map->size--;    
-    printf("did not remove\n\n");
+    printf("did not remove, size: %d\n\n",map->size);
 }
 
 /**
