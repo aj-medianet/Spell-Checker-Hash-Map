@@ -224,24 +224,31 @@ void hashMapPut(HashMap* map, const char* key, int value) {
 
     //check if already exists
     struct HashLink *cur = map->table[hashIndex];
+    struct HashLink *last;
 
-    //loop through linked list to see if key already exists
-    while (cur != NULL) {
-        //if found, replace value and exit function
-        if(strcmp(key, cur->key) == 0) {
-            cur->value = value;
-            return;
+    if (cur != NULL) {
+        //loop through linked list to see if key already exists
+        while (cur != NULL) {
+            //if found, replace value and exit function
+            if(strcmp(key, cur->key) == 0) {
+              cur->value = value;
+              return;
+            } 
+            last = cur;
+            cur = cur->next;
         }
-        cur = cur->next;
-    }
-    
+    } 
+
     //if key doesn't already exist, create new link
-    HashLink *newLink = hashLinkNew(key, value, map->table[hashIndex]);
+    HashLink *newLink = hashLinkNew(key, value, NULL);
     assert(newLink); 
 
     //add to bucket
+    last->next = newLink;
     map->table[hashIndex] = newLink; 
-    map->size++;  
+    map->size++; 
+    
+
 
     //check load
     if(hashMapTableLoad(map) >= MAX_TABLE_LOAD) {
@@ -260,6 +267,7 @@ void hashMapRemove(HashMap* map, const char* key) {
     assert(map != NULL);
     printf("in remove function, key: %c\n", *key);
     printf("size before remove: %d\n", map->size);
+    //if(strcmp("a",key)) {return;}
     //get hash index
     int hashIndex = abs(HASH_FUNCTION(key) % map->capacity);
 
@@ -269,16 +277,19 @@ void hashMapRemove(HashMap* map, const char* key) {
     //loop through linked list in hashed index
     while (cur != NULL) {
         if(strcmp(key, cur->key) == 0) {
+            hashMapContainsKey(map,"c");
+            printf("\n\n\n\n");
             //remove link
             map->table[hashIndex] = cur->next;
             hashLinkDelete(cur);
             map->size--;
             printf("size after remove: %d\n", map->size);
+            hashMapContainsKey(map,"c");
+            printf("\n\n\n\n");
             return;   
         }
         cur = cur->next;
     }
-    //map->size--;    
 
     printf("did not remove, size: %d\n\n",map->size);
     printf("not removed key: %c contains: %d\n\n\n\n",*key,hashMapContainsKey(map, key));
