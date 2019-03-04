@@ -224,7 +224,7 @@ void hashMapPut(HashMap* map, const char* key, int value) {
 
     //check if already exists
     struct HashLink *cur = map->table[hashIndex];
-    struct HashLink *last;
+    struct HashLink *last = NULL;
 
     if (cur != NULL) {
         //loop through linked list to see if key already exists
@@ -254,7 +254,7 @@ void hashMapPut(HashMap* map, const char* key, int value) {
     map->size++; 
 
     //check load
-    if(hashMapTableLoad(map) >= MAX_TABLE_LOAD) {
+    if (hashMapTableLoad(map) >= MAX_TABLE_LOAD) {
         resizeTable(map, (map->capacity * 2));
     } 
 }
