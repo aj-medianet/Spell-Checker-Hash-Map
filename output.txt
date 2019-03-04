@@ -1,0 +1,752 @@
+$ ./tests
+
+--- Testing single-link chains under threshold ---
+in put function
+key: a value: 0 
+
+load: 0.100000
+
+in put function
+key: c value: 1 
+
+load: 0.200000
+
+in put function
+key: d value: 2 
+
+load: 0.300000
+
+in put function
+key: f value: 3 
+
+load: 0.400000
+
+in put function
+key: g value: 4 
+
+load: 0.500000
+
+
+After adding all key-value pairs:2 3 4 0 1 
+
+size: 5
+capacity: 10
+empty buckets: 5
+load: 0.500000
+
+in contains function, key: a
+contains: 1
+
+in get function, key: a
+get: 0
+in contains function, key: c
+contains: 1
+
+in get function, key: c
+get: 1
+in contains function, key: d
+contains: 1
+
+in get function, key: d
+get: 2
+in contains function, key: f
+contains: 1
+
+in get function, key: f
+get: 3
+in contains function, key: g
+contains: 1
+
+in get function, key: g
+get: 4
+in contains function, key: b
+contains: 0
+
+in get function, key: b
+get: null
+in contains function, key: e
+contains: 0
+
+in get function, key: e
+get: null
+in contains function, key: h
+contains: 0
+
+in get function, key: h
+get: null
+in remove function, key: a
+size before remove: 5
+in hash link delete
+
+size after remove: 4
+in remove function, key: c
+size before remove: 4
+in hash link delete
+
+size after remove: 3
+in remove function, key: d
+size before remove: 3
+in hash link delete
+
+size after remove: 2
+in remove function, key: f
+size before remove: 2
+in hash link delete
+
+size after remove: 1
+in remove function, key: g
+size before remove: 1
+in hash link delete
+
+size after remove: 0
+
+After removing all key-value pairs:
+
+size: 0
+capacity: 10
+empty buckets: 10
+load: 0.000000
+
+in contains function, key: a
+contains: 0
+
+in get function, key: a
+get: null
+in contains function, key: c
+contains: 0
+
+in get function, key: c
+get: null
+in contains function, key: d
+contains: 0
+
+in get function, key: d
+get: null
+in contains function, key: f
+contains: 0
+
+in get function, key: f
+get: null
+in contains function, key: g
+contains: 0
+
+in get function, key: g
+get: null
+in contains function, key: b
+contains: 0
+
+in get function, key: b
+get: null
+in contains function, key: e
+contains: 0
+
+in get function, key: e
+get: null
+in contains function, key: h
+contains: 0
+
+in get function, key: h
+get: null
+in clean up function
+
+--- Testing single-link chains over threshold ---
+in put function
+key: a value: 0 
+
+load: 1.000000
+
+in resize function
+in put function
+key: a value: 0 
+
+load: 0.500000
+
+in clean up function
+in hash link delete
+
+capacity: 2
+after resize capacity is: 2
+in put function
+key: c value: 1 
+
+load: 1.000000
+
+in resize function
+in put function
+key: c value: 1 
+
+load: 0.250000
+
+in put function
+key: a value: 0 
+
+load: 0.500000
+
+in clean up function
+in hash link delete
+
+in hash link delete
+
+capacity: 4
+after resize capacity is: 4
+in put function
+key: d value: 2 
+
+load: 0.750000
+
+in put function
+key: f value: 3 
+
+load: 1.000000
+
+in resize function
+in put function
+key: d value: 2 
+
+load: 0.125000
+
+in put function
+key: a value: 0 
+
+load: 0.250000
+
+in put function
+key: f value: 3 
+
+load: 0.375000
+
+in put function
+key: c value: 1 
+
+load: 0.500000
+
+in clean up function
+in hash link delete
+
+in hash link delete
+
+in hash link delete
+
+in hash link delete
+
+capacity: 8
+after resize capacity is: 8
+in put function
+key: g value: 4 
+
+load: 0.625000
+
+
+After adding all key-value pairs:0 1 2 3 4 
+
+size: 5
+capacity: 8
+empty buckets: 3
+load: 0.625000
+
+in contains function, key: a
+contains: 1
+
+in get function, key: a
+get: 0
+in contains function, key: c
+contains: 1
+
+in get function, key: c
+get: 1
+in contains function, key: d
+contains: 1
+
+in get function, key: d
+get: 2
+in contains function, key: f
+contains: 1
+
+in get function, key: f
+get: 3
+in contains function, key: g
+contains: 1
+
+in get function, key: g
+get: 4
+in contains function, key: b
+contains: 0
+
+in get function, key: b
+get: null
+in contains function, key: e
+contains: 0
+
+in get function, key: e
+get: null
+in contains function, key: h
+contains: 0
+
+in get function, key: h
+get: null
+in remove function, key: a
+size before remove: 5
+in hash link delete
+
+size after remove: 4
+in remove function, key: c
+size before remove: 4
+in hash link delete
+
+size after remove: 3
+in remove function, key: d
+size before remove: 3
+in hash link delete
+
+size after remove: 2
+in remove function, key: f
+size before remove: 2
+in hash link delete
+
+size after remove: 1
+in remove function, key: g
+size before remove: 1
+in hash link delete
+
+size after remove: 0
+
+After removing all key-value pairs:
+
+size: 0
+capacity: 8
+empty buckets: 8
+load: 0.000000
+
+in contains function, key: a
+contains: 0
+
+in get function, key: a
+get: null
+in contains function, key: c
+contains: 0
+
+in get function, key: c
+get: null
+in contains function, key: d
+contains: 0
+
+in get function, key: d
+get: null
+in contains function, key: f
+contains: 0
+
+in get function, key: f
+get: null
+in contains function, key: g
+contains: 0
+
+in get function, key: g
+get: null
+in contains function, key: b
+contains: 0
+
+in get function, key: b
+get: null
+in contains function, key: e
+contains: 0
+
+in get function, key: e
+get: null
+in contains function, key: h
+contains: 0
+
+in get function, key: h
+get: null
+in clean up function
+
+--- Testing multiple-link chains under threshold ---
+in put function
+key: a value: 0 
+
+load: 0.100000
+
+in put function
+key: c value: 1 
+
+load: 0.200000
+
+in put function
+key: b value: 2 
+
+load: 0.300000
+
+in put function
+key: f value: 3 
+
+load: 0.400000
+
+in put function
+key: g value: 4 
+
+load: 0.500000
+
+
+After adding all key-value pairs:3 2 0 4 1 
+
+size: 5
+capacity: 10
+empty buckets: 6
+load: 0.500000
+
+in contains function, key: a
+contains: 1
+
+in get function, key: a
+get: 0
+in contains function, key: c
+contains: 1
+
+in get function, key: c
+get: 1
+in contains function, key: b
+contains: 1
+
+in get function, key: b
+get: 2
+in contains function, key: f
+contains: 1
+
+in get function, key: f
+get: 3
+in contains function, key: g
+contains: 1
+
+in get function, key: g
+get: 4
+in contains function, key: b
+contains: 0
+
+in get function, key: b
+get: null
+in contains function, key: e
+contains: 0
+
+in get function, key: e
+get: null
+in contains function, key: h
+contains: 0
+
+in get function, key: h
+get: null
+in remove function, key: a
+size before remove: 5
+in hash link delete
+
+size after remove: 4
+in remove function, key: c
+size before remove: 4
+in hash link delete
+
+size after remove: 3
+in remove function, key: b
+size before remove: 3
+did not remove, size: 3
+
+in contains function, key: b
+contains: 0
+
+not removed key: b contains: 0
+
+
+
+in remove function, key: f
+size before remove: 3
+in hash link delete
+
+size after remove: 2
+in remove function, key: g
+size before remove: 2
+in hash link delete
+
+size after remove: 1
+
+After removing all key-value pairs:
+
+size: 1
+
+--- Testing multiple-link chains over threshold ---
+in put function
+key: a value: 0 
+
+load: 1.000000
+
+in resize function
+in put function
+key: a value: 0 
+
+load: 0.500000
+
+in clean up function
+in hash link delete
+
+capacity: 2
+after resize capacity is: 2
+in put function
+key: c value: 1 
+
+load: 1.000000
+
+in resize function
+in put function
+key: c value: 1 
+
+load: 0.250000
+
+in put function
+key: a value: 0 
+
+load: 0.500000
+
+in clean up function
+in hash link delete
+
+in hash link delete
+
+capacity: 4
+after resize capacity is: 4
+in put function
+key: b value: 2 
+
+load: 0.750000
+
+in put function
+key: f value: 3 
+
+load: 1.000000
+
+in resize function
+in put function
+key: f value: 3 
+
+load: 0.125000
+
+in put function
+key: b value: 2 
+
+load: 0.250000
+
+in put function
+key: a value: 0 
+
+load: 0.375000
+
+in put function
+key: c value: 1 
+
+load: 0.500000
+
+in clean up function
+in hash link delete
+
+in hash link delete
+
+in hash link delete
+
+in hash link delete
+
+capacity: 8
+after resize capacity is: 8
+in put function
+key: g value: 4 
+
+load: 0.625000
+
+
+After adding all key-value pairs:1 0 2 3 4 
+
+size: 5
+capacity: 8
+empty buckets: 5
+load: 0.625000
+
+in contains function, key: a
+contains: 1
+
+in get function, key: a
+get: 0
+in contains function, key: c
+contains: 1
+
+in get function, key: c
+get: 1
+in contains function, key: b
+contains: 1
+
+in get function, key: b
+get: 2
+in contains function, key: f
+contains: 1
+
+in get function, key: f
+get: 3
+in contains function, key: g
+contains: 1
+
+in get function, key: g
+get: 4
+in contains function, key: b
+contains: 0
+
+in get function, key: b
+get: null
+in contains function, key: e
+contains: 0
+
+in get function, key: e
+get: null
+in contains function, key: h
+contains: 0
+
+in get function, key: h
+get: null
+in remove function, key: a
+size before remove: 5
+in hash link delete
+
+size after remove: 4
+in remove function, key: c
+size before remove: 4
+did not remove, size: 4
+
+in contains function, key: c
+contains: 0
+
+not removed key: c contains: 0
+
+
+
+in remove function, key: b
+size before remove: 4
+in hash link delete
+
+size after remove: 3
+in remove function, key: f
+size before remove: 3
+in hash link delete
+
+size after remove: 2
+in remove function, key: g
+size before remove: 2
+in hash link delete
+
+size after remove: 1
+
+After removing all key-value pairs:
+
+size: 1
+
+--- Testing value updates ---
+in put function
+key: a value: 0 
+
+load: 1.000000
+
+in resize function
+in put function
+key: a value: 0 
+
+load: 0.500000
+
+in clean up function
+in hash link delete
+
+capacity: 2
+after resize capacity is: 2
+in put function
+key: c value: 1 
+
+load: 1.000000
+
+in resize function
+in put function
+key: c value: 1 
+
+load: 0.250000
+
+in put function
+key: a value: 0 
+
+load: 0.500000
+
+in clean up function
+in hash link delete
+
+in hash link delete
+
+capacity: 4
+after resize capacity is: 4
+in put function
+key: b value: 2 
+
+load: 0.750000
+
+in put function
+key: a value: 3 
+
+in put function
+key: g value: 4 
+
+load: 1.000000
+
+in resize function
+in put function
+key: g value: 4 
+
+load: 0.125000
+
+in put function
+key: b value: 2 
+
+load: 0.250000
+
+in put function
+key: a value: 3 
+
+load: 0.375000
+
+in put function
+key: c value: 1 
+
+load: 0.500000
+
+in clean up function
+in hash link delete
+
+in hash link delete
+
+in hash link delete
+
+in hash link delete
+
+capacity: 8
+after resize capacity is: 8
+
+After adding all key-value pairs:1 3 2 4 
+
+in get function, key: a
+get: 3
+in clean up function
+in hash link delete
+
+in hash link delete
+
+in hash link delete
+
+in hash link delete
+
+
+..FF.
+
+There were 2 failures:
+1) testMultipleUnder: tests.c:191: expected <0> but was <1>
+2) testMultipleOver: tests.c:191: expected <0> but was <1>
+
+!!!FAILURES!!!
+Runs: 5 Passes: 3 Fails: 2
+
+
