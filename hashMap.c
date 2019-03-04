@@ -259,7 +259,7 @@ void hashMapPut(HashMap* map, const char* key, int value) {
 void hashMapRemove(HashMap* map, const char* key) {
     assert(map != NULL);
     printf("in remove function, key: %c\n", *key);
-
+    printf("size before remove: %d\n", map->size);
     //get hash index
     int hashIndex = abs(HASH_FUNCTION(key) % map->capacity);
 
@@ -278,8 +278,10 @@ void hashMapRemove(HashMap* map, const char* key) {
         }
         cur = cur->next;
     }
-    map->size--;    
+    //map->size--;    
+
     printf("did not remove, size: %d\n\n",map->size);
+    printf("not removed key: %c contains: %d\n\n\n\n",*key,hashMapContainsKey(map, key));
 }
 
 /**
