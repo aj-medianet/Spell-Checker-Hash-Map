@@ -276,18 +276,24 @@ void hashMapRemove(HashMap* map, const char* key) {
 
     //set a link to head of hash table index
     struct HashLink *cur = map->table[hashIndex];
+    struct HashLink *last;
 
     //loop through linked list in hashed index
     while (cur != NULL) {
         if(strcmp(key, cur->key) == 0) {
-            //remove link
-            map->table[hashIndex] = cur->next;
+            if(last == NULL) {
+                map->table[hashIndex] = cur->next;
+            } else {
+                last->next = cur->next;
+            }
+            
             hashLinkDelete(cur);
             map->size--;
             printf("size after remove: %d\n", map->size);
             hashMapContainsKey(map,"c");
             return;   
         }
+        last = cur;
         cur = cur->next;
     }
 }
