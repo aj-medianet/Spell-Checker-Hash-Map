@@ -276,7 +276,7 @@ void hashMapRemove(HashMap* map, const char* key) {
 
     //set a link to head of hash table index
     struct HashLink *cur = map->table[hashIndex];
-    struct HashLink *last;
+    struct HashLink *last = NULL;
 
     //loop through linked list in hashed index
     while (cur != NULL) {
