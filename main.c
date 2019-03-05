@@ -39,7 +39,7 @@ char* nextWord(FILE* file)
                 word = realloc(word, maxLength);
             }
             // .............
-            word[length] = c;
+            word[length] = tolower(c);
             length++;
         }
         else if (length > 0 || c == EOF)
@@ -73,24 +73,52 @@ int main(int argc, const char** argv)
         fileName = argv[1];
     }
     printf("Opening file: %s\n", fileName);
+    FILE *inFile = fopen(fileName,"r");
+
+    if(inFile != NULL) {
+        clock_t timer = clock();
     
-    clock_t timer = clock();
+        HashMap* map = hashMapNew(10);
     
-    HashMap* map = hashMapNew(10);
+        // --- Concordance code begins here ---
+
+        //set nextWord to first word in file, declare value to NULL to use in loop
+        char* nxtWord = nextWord(inFile);
+        int* value = NULL;
+
+        while (nxtWord != NULL) {
+            //get value of nxtWord in hash map
+            value = hashMapGet(map, nxtWord);
+
+            //if value already exists in map, add 1 to current total
+            if (value != NULL) {
+                hashMapPut(map, nxtWord, *value + 1);
+            //else, value doesn't exist yet so put with count of 1
+            } else {
+                hashMapPut(map, nxtWord, 1);
+            }
+            // Be sure to free the word after you are done with it here.
+            free(nxtWord);
+            nxtWord = nextWord(inFile);
+        }
+        printf("Closing file: %s\n", fileName);
+        fclose(inFile);
+
+        // --- Concordance code ends here ---
     
-    // --- Concordance code begins here ---
-    // Be sure to free the word after you are done with it here.
-    // --- Concordance code ends here ---
+        timer = clock() - timer;
+        printf("\nRan in %f seconds\n", (float)timer / (float)CLOCKS_PER_SEC);
+        printf("Empty buckets: %d\n", hashMapEmptyBuckets(map));
+        printf("Number of links: %d\n", hashMapSize(map));
+        printf("Number of buckets: %d\n", hashMapCapacity(map));
+        printf("Table load: %f\n", hashMapTableLoad(map));
     
-    
-    
-    timer = clock() - timer;
-    printf("\nRan in %f seconds\n", (float)timer / (float)CLOCKS_PER_SEC);
-    printf("Empty buckets: %d\n", hashMapEmptyBuckets(map));
-    printf("Number of links: %d\n", hashMapSize(map));
-    printf("Number of buckets: %d\n", hashMapCapacity(map));
-    printf("Table load: %f\n", hashMapTableLoad(map));
-    
-    hashMapDelete(map);
+        hashMapDelete(map);
+
+
+    } else {
+        printf("\n\n**FILE INPUT ERROR**\n\n");
+    }
+
     return 0;
 }

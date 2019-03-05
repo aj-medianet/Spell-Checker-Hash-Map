@@ -140,7 +140,12 @@ void hashMapDelete(HashMap* map)
 int* hashMapGet(HashMap* map, const char* key) {
     assert(map != NULL);
     assert(key != NULL);
-    printf("in get function, key: %c\n", *key);
+    
+    printf("Get function Key:");
+    for (int i = 0; i < strlen(key); i++) {
+        printf(" %c", key[i]);
+    }
+    printf("\n\n");
 
     //get hash index
     int hashIndex = abs(HASH_FUNCTION(key) % map->capacity);
@@ -216,8 +221,11 @@ void resizeTable(HashMap* map, int capacity) {
 void hashMapPut(HashMap* map, const char* key, int value) {
     assert(map != NULL);
     assert(key != NULL);
-    printf("in put function\n");
-    printf("key: %c value: %d \n\n",*key,value);
+    printf("Put function Key:");
+    for (int i = 0; i < strlen(key); i++) {
+        printf(" %c", key[i]);
+    }
+    printf("\n\n");
    
     //get hash index
     int hashIndex = abs(HASH_FUNCTION(key) % map->capacity);
@@ -289,8 +297,6 @@ void hashMapRemove(HashMap* map, const char* key) {
             
             hashLinkDelete(cur);
             map->size--;
-            printf("size after remove: %d\n", map->size);
-            hashMapContainsKey(map,"c");
             return;   
         }
         last = cur;
