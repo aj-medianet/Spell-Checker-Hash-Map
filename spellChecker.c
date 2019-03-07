@@ -14,6 +14,10 @@
 #include <string.h>
 #include <ctype.h>
 
+
+
+//https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#C
+
 #define MIN3(a, b, c) ((a) < (b) ? ((a) < (c) ? (a) : (c)) : ((b) < (c) ? (b) : (c)))
 
 int levenshteinDistance(char *s1, char *s2) {
