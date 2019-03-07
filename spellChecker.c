@@ -60,9 +60,10 @@ char* nextWord(FILE* file)
  * @param file
  * @param map
  */
-void loadDictionary(FILE* file, HashMap* map)
-{
-    // FIXME: implement
+void loadDictionary(FILE* file, HashMap* map) {
+    for(int i = 0; i < 11000; i++) {
+        printf("test: %d\n",i);
+    }
 }
 
 /**
@@ -76,7 +77,7 @@ void loadDictionary(FILE* file, HashMap* map)
 int main(int argc, const char** argv)
 {
     // FIXME: implement
-    HashMap* map = hashMapNew(1000);
+    HashMap* map = hashMapNew(11000);
     
     FILE* file = fopen("dictionary.txt", "r");
     clock_t timer = clock();
@@ -87,15 +88,28 @@ int main(int argc, const char** argv)
     
     char inputBuffer[256];
     int quit = 0;
+    int correctSpelling = 0;
     while (!quit)
     {
         printf("Enter a word or \"quit\" to quit: ");
         scanf("%s", inputBuffer);
         
         // Implement the spell checker code here..
+
+        //check to see if word is in the hash map
+        correctSpelling = hashMapContainsKey(map, inputBuffer);
+
+        //if the word is found, print correct
+        if (correctSpelling == 1) {
+            printf("\nThe inputted word .... is spelled correctly\n\n");
+        } else {
+            printf("\nThe inputted word .... is spelled incorrectly\n");
+            printf("Did you mean...?\n");
+        }
+
+
         
-        if (strcmp(inputBuffer, "quit") == 0)
-        {
+        if (strcmp(inputBuffer, "quit") == 0) {
             quit = 1;
         }
     }

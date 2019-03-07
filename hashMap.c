@@ -138,11 +138,13 @@ int* hashMapGet(HashMap* map, const char* key) {
     assert(map != NULL);
     assert(key != NULL);
     
+    /*
     printf("Get Function Key:");
     for (int i = 0; i < strlen(key); i++) {
         printf(" %c", key[i]);
     }
     printf("\n\n");
+    */
 
     //get hash index
     int hashIndex = abs(HASH_FUNCTION(key) % map->capacity);
@@ -153,12 +155,12 @@ int* hashMapGet(HashMap* map, const char* key) {
     //search linked list for key & return pointer to value of link
     while(cur != NULL) {
         if(strcmp(key, cur->key) == 0) {
-            printf("get: %d\n", cur->value);
+            //printf("get: %d\n", cur->value);
             return &cur->value;
         }
         cur = cur->next;
     }
-    printf("get: null\n");
+    //printf("get: null\n");
     return NULL;
 }
 
@@ -175,7 +177,7 @@ int* hashMapGet(HashMap* map, const char* key) {
  */
 void resizeTable(HashMap* map, int capacity) {
     assert(map != NULL);
-    printf("in resize function\n");
+    //printf("in resize function\n");
 
     struct HashMap *newMap = malloc(sizeof(HashMap));
     assert(newMap != NULL);
@@ -199,7 +201,7 @@ void resizeTable(HashMap* map, int capacity) {
     map->size = newMap->size; //reset size after using put function
     free(newMap); //free newMap
 
-    printf("after resize capacity is: %d\n", hashMapCapacity(map));
+    //printf("after resize capacity is: %d\n", hashMapCapacity(map));
 }
 
 /**
@@ -218,11 +220,13 @@ void resizeTable(HashMap* map, int capacity) {
 void hashMapPut(HashMap* map, const char* key, int value) {
     assert(map != NULL);
     assert(key != NULL);
+    /*
     printf("Put Function Key:");
     for (int i = 0; i < strlen(key); i++) {
         printf(" %c", key[i]);
     }
     printf("\n\n");
+    */
    
     //get hash index
     int hashIndex = abs(HASH_FUNCTION(key) % map->capacity);
@@ -273,8 +277,8 @@ void hashMapPut(HashMap* map, const char* key, int value) {
  */
 void hashMapRemove(HashMap* map, const char* key) {
     assert(map != NULL);
-    printf("in remove function, key: %c\n", *key);
-    printf("size before remove: %d\n", map->size);
+    //printf("in remove function, key: %c\n", *key);
+    //printf("size before remove: %d\n", map->size);
 
     //get hash index
     int hashIndex = abs(HASH_FUNCTION(key) % map->capacity);
@@ -313,11 +317,13 @@ void hashMapRemove(HashMap* map, const char* key) {
  */
 int hashMapContainsKey(HashMap* map, const char* key) {
     assert(map != NULL);
-    printf("Contains Function Key:");
+    //printf("Contains Function Key:");
+    /*
     for (int i = 0; i < strlen(key); i++) {
         printf(" %c", key[i]);
     }
     printf("\n\n");
+    */
 
     //get hash index
     int hashIndex = abs(HASH_FUNCTION(key) % map->capacity);
@@ -329,7 +335,7 @@ int hashMapContainsKey(HashMap* map, const char* key) {
     while (cur != NULL) {
         //found a match, return true
         if (strcmp(key, cur->key) == 0) {
-            printf("contains: 1\n\n");
+            //printf("contains: 1\n\n");
             return 1;
         } 
         cur = cur->next;
@@ -344,7 +350,7 @@ int hashMapContainsKey(HashMap* map, const char* key) {
  * @return Number of links in the table.
  */
 int hashMapSize(HashMap* map) {
-    printf("size: %d\n",map->size);
+    //printf("size: %d\n",map->size);
     return map->size;
 }
 
@@ -354,7 +360,7 @@ int hashMapSize(HashMap* map) {
  * @return Number of buckets in the table.
  */
 int hashMapCapacity(HashMap* map) {
-    printf("capacity: %d\n",map->capacity);
+    //printf("capacity: %d\n",map->capacity);
     return map->capacity;
 }
 
@@ -370,7 +376,7 @@ int hashMapEmptyBuckets(HashMap* map) {
             count++;
         }
     }
-    printf("empty buckets: %d\n", count);
+    //printf("empty buckets: %d\n", count);
 
     return count;
 }
@@ -384,7 +390,7 @@ int hashMapEmptyBuckets(HashMap* map) {
  * @return Table load.
  */
 float hashMapTableLoad(HashMap* map) {
-    printf("load: %f\n\n",((map->size / (float) map->capacity)));
+    //printf("load: %f\n\n",((map->size / (float) map->capacity)));
     return ((map->size / (float) map->capacity));
 }
 
