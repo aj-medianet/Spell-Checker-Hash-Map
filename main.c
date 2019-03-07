@@ -83,7 +83,7 @@ int main(int argc, const char** argv)
         // --- Concordance code begins here ---
 
         //set nextWord to first word in file, declare value to NULL to use in loop
-        char* nxtWord = nextWord(inFile);
+        char* nxtWord = "nextWord(inFile)";
         int* value = NULL;
 
         while (nxtWord != NULL) {

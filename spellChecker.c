@@ -14,6 +14,26 @@
 #include <string.h>
 #include <ctype.h>
 
+#define MIN3(a, b, c) ((a) < (b) ? ((a) < (c) ? (a) : (c)) : ((b) < (c) ? (b) : (c)))
+
+int levenshteinDistance(char *s1, char *s2) {
+    unsigned int s1len, s2len, x, y, lastdiag, olddiag;
+    s1len = strlen(s1);
+    s2len = strlen(s2);
+    unsigned int column[s1len+1];
+    for (y = 1; y <= s1len; y++)
+        column[y] = y;
+    for (x = 1; x <= s2len; x++) {
+        column[0] = x;
+        for (y = 1, lastdiag = x-1; y <= s1len; y++) {
+            olddiag = column[y];
+            column[y] = MIN3(column[y] + 1, column[y-1] + 1, lastdiag + (s1[y-1] == s2[x-1] ? 0 : 1));
+            lastdiag = olddiag;
+        }
+    }
+    return(column[s1len]);
+}
+
 /**
  * Allocates a string for the next word in the file and returns it. This string
  * is null terminated. Returns NULL after reaching the end of the file.
@@ -61,9 +81,24 @@ char* nextWord(FILE* file)
  * @param map
  */
 void loadDictionary(FILE* file, HashMap* map) {
-    for(int i = 0; i < 11000; i++) {
-        printf("test: %d\n",i);
+    char* nxtWord = nextWord(file);
+    int* value = NULL;
+
+    while (nxtWord != NULL) {
+        //get value of nxtWord in hash map
+        value = hashMapGet(map, nxtWord);
+        
+        if (value != NULL) {
+            hashMapPut(map, nxtWord, *value + 1);
+            //else, value doesn't exist yet so put with count of 1
+        } else {
+            hashMapPut(map, nxtWord, 1);
+        }
+
+        nxtWord = nextWord(file);
+
     }
+    //hashMapPrint(map);
 }
 
 /**
@@ -77,7 +112,12 @@ void loadDictionary(FILE* file, HashMap* map) {
 int main(int argc, const char** argv)
 {
     // FIXME: implement
-    HashMap* map = hashMapNew(11000);
+    HashMap* map = hashMapNew(1000);
+    char closestMatches[5][256]; //array of 5 closest matches
+    int levDistance = 0;
+    int min = 1000;
+
+    char bestMatch[100];
     
     FILE* file = fopen("dictionary.txt", "r");
     clock_t timer = clock();
@@ -105,6 +145,31 @@ int main(int argc, const char** argv)
         } else {
             printf("\nThe inputted word .... is spelled incorrectly\n");
             printf("Did you mean...?\n");
+
+            //find 5 closest words
+
+            /*loop through hash map and compare input to dictionary using levenshtein distance*/
+            struct HashLink *cur;
+
+            for(int i = 0; i < hashMapCapacity(map); i++) {
+                printf("test\n");
+                cur = map->table[i];
+                printf("test1\n");
+                levDistance = levenshteinDistance(inputBuffer, cur->key);
+                printf("test2\n");
+                if (levDistance < min) {
+                    printf("test3\n");
+                    min = levDistance;
+                    strcpy(bestMatch, inputBuffer);
+                }
+            }
+            
+            //print best match
+            printf("best match:\n\n");
+            for (int i = 0; i < strlen(bestMatch); i++) {
+                printf("%c", bestMatch[i]);
+            }
+            printf("\n\n");
         }
 
 
@@ -113,6 +178,8 @@ int main(int argc, const char** argv)
             quit = 1;
         }
     }
+
+    printf("Goodbye\n");
     
     hashMapDelete(map);
     return 0;

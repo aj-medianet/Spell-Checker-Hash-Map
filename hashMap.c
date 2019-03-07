@@ -220,13 +220,15 @@ void resizeTable(HashMap* map, int capacity) {
 void hashMapPut(HashMap* map, const char* key, int value) {
     assert(map != NULL);
     assert(key != NULL);
+    
     /*
     printf("Put Function Key:");
     for (int i = 0; i < strlen(key); i++) {
-        printf(" %c", key[i]);
+        printf("%c", key[i]);
     }
     printf("\n\n");
     */
+    
    
     //get hash index
     int hashIndex = abs(HASH_FUNCTION(key) % map->capacity);
@@ -403,7 +405,7 @@ void hashMapPrint(HashMap* map) {
 
     struct HashLink *cur;
 
-    //loop through old map and hash each key/value to newMap
+    //loop through map and print
     for (int i = 0; i < map->capacity; i++) {
         cur = map->table[i];
         while (cur != NULL) {
