@@ -38,6 +38,8 @@ int levenshteinDistance(char *s1, char *s2) {
     return(column[s1len]);
 }
 
+
+
 /**
  * Allocates a string for the next word in the file and returns it. This string
  * is null terminated. Returns NULL after reaching the end of the file.
@@ -100,7 +102,6 @@ void loadDictionary(FILE* file, HashMap* map) {
         }
 
         nxtWord = nextWord(file);
-
     }
     //hashMapPrint(map);
 }
@@ -137,6 +138,14 @@ int main(int argc, const char** argv)
     {
         printf("Enter a word or \"quit\" to quit: ");
         scanf("%s", inputBuffer);
+
+        //convert user input to lowercase
+        for(int i = 0; i < strlen(inputBuffer); i++) {
+            if (inputBuffer[i] >= 'A' && inputBuffer[i] <= 'Z') {
+
+                inputBuffer[i] = tolower(inputBuffer[i]);
+            }
+        }
         
         // Implement the spell checker code here..
 
@@ -146,6 +155,8 @@ int main(int argc, const char** argv)
         //if the word is found, print correct
         if (correctSpelling == 1) {
             printf("\nThe inputted word .... is spelled correctly\n\n");
+
+        //else misspelled, find 5 closest words to suggest using levenshtein distance
         } else {
             printf("\nThe inputted word .... is spelled incorrectly\n");
             printf("Did you mean...?\n");
