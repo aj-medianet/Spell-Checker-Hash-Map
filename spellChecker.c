@@ -21,9 +21,16 @@ struct ClosestMatches {
 };
 
 
-//https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#C
+
 
 #define MIN3(a, b, c) ((a) < (b) ? ((a) < (c) ? (a) : (c)) : ((b) < (c) ? (b) : (c)))
+
+//https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#C
+/**
+ * gets the levenshtein distance of two strings
+ * @param s1, s2
+ * @returns integer distance
+ */
 
 int getLevenshteinDistance(char *s1, char *s2) {
     unsigned int s1len, s2len, x, y, lastdiag, olddiag;
@@ -41,7 +48,6 @@ int getLevenshteinDistance(char *s1, char *s2) {
             lastdiag = olddiag;
         }
     }
-    printf("");
     return(column[s1len]);
 }
 
@@ -113,6 +119,21 @@ void loadDictionary(FILE* file, HashMap* map) {
 }
 
 /**
+* Checks that the input is all letters
+* param - inputBuffer
+* @return integer, 1 for true 0 for false
+*/
+int getValidInput(char* inputBuffer) {
+    for(int i = 0; i < strlen(inputBuffer); i++) {
+        if(inputBuffer[i] < 65 || (inputBuffer[i] > 90 && inputBuffer[i] < 97) || inputBuffer[i] > 122 ) {
+            printf("\n\n*** Invalid Input, only user letters ***\n\n");
+            return 0;
+        }
+    }
+    return 1;
+}
+
+/**
  * Prints the concordance of the given file and performance information. Uses
  * the file input1.txt by default or a file name specified as a command line
  * argument.
@@ -126,6 +147,7 @@ int main(int argc, const char** argv)
     HashMap* map = hashMapNew(1000);
     struct ClosestMatches cm[5]; //array of 5 closest matches
     int ld = 0;
+    int validInput = 0;
     
     FILE* file = fopen("dictionary.txt", "r");
     clock_t timer = clock();
@@ -137,74 +159,72 @@ int main(int argc, const char** argv)
     char inputBuffer[256];
     int quit = 0;
     int correctSpelling = 0;
-    while (!quit) {
-        ld = 0;
-        //initialize lev distances
-        for(int i = 0; i < 5; i++) {
-            cm[i].lev_distance = 1000;
-        }
-
+    while (!quit) {  
         printf("Enter a word or \"quit\" to quit: ");
         scanf("%s", inputBuffer);
+        validInput = getValidInput(inputBuffer); //check for special characters
 
-        //check for special characters
-        /* to do */
-
-        //convert user input to lowercase
-        for(int i = 0; i < strlen(inputBuffer); i++) {
-            if (inputBuffer[i] >= 'A' && inputBuffer[i] <= 'Z') {
-                inputBuffer[i] = tolower(inputBuffer[i]);
+        if (validInput) {
+            //initialize lev distances
+            ld = 0; //reset ld
+            for(int i = 0; i < 5; i++) {
+                cm[i].lev_distance = 1000;
             }
-        }
-        
-        // Implement the spell checker code here..
 
-        //check to see if word is in the hash map
-        correctSpelling = hashMapContainsKey(map, inputBuffer);
-
-        //if the word is found, print correct
-        if (correctSpelling == 1) {
-            printf("\nThe inputted word .... is spelled correctly\n\n");
-
-        //else misspelled, find 5 closest words to suggest using levenshtein distance
-        } else {
-            printf("\nThe inputted word .... is spelled incorrectly\n");
-            printf("Did you mean...?\n\n");
-
-            //find 5 closest words
-
-            /*loop through hash map and compare input to dictionary using levenshtein distance*/
-            struct HashLink *cur;
-
-            for (int i = 0; i < hashMapCapacity(map); i++) {
-                cur = map->table[i];
-                while (cur != NULL) {
-                    ld = getLevenshteinDistance(inputBuffer, cur->key);
-
-                    //loop through array of ClosestMatches to check lev distances
-                    for (int j = 0; j < 5; j++) {
-                        //if new lev distance is lower, add it to the array and break out of loop
-                        if (ld < cm[j].lev_distance) {
-                            strcpy(cm[j].word, cur->key);
-                            cm[j].lev_distance = ld;
-                            break;
-                        }
-                    }
-
-                    cur = cur->next;
+            //convert user input to lowercase
+            for(int i = 0; i < strlen(inputBuffer); i++) {
+                if (inputBuffer[i] >= 'A' && inputBuffer[i] <= 'Z') {
+                    inputBuffer[i] = tolower(inputBuffer[i]);
                 }
             }
+        
+            // Implement the spell checker code here..
+
+            //check to see if word is in the hash map
+            correctSpelling = hashMapContainsKey(map, inputBuffer);
+
+            //if the word is found, print correct
+            if (correctSpelling == 1) {
+                printf("\nThe inputted word .... is spelled correctly\n\n");
+
+            //else misspelled, find 5 closest words to suggest using levenshtein distance
+            } else {
+                printf("\nThe inputted word .... is spelled incorrectly\n");
+                printf("Did you mean...?\n\n");
+
+                //find 5 closest words
+
+                /*loop through hash map and compare input to dictionary using levenshtein distance*/
+                struct HashLink *cur;
+
+                for (int i = 0; i < hashMapCapacity(map); i++) {
+                    cur = map->table[i];
+                    while (cur != NULL) {
+                        ld = getLevenshteinDistance(inputBuffer, cur->key);
+
+                        //loop through array of ClosestMatches to check lev distances
+                        for (int j = 0; j < 5; j++) {
+                            //if new lev distance is lower, add it to the array and break out of loop
+                            if (ld < cm[j].lev_distance) {
+                                strcpy(cm[j].word, cur->key);
+                                cm[j].lev_distance = ld;
+                                break;
+                            }
+                        }
+
+                        cur = cur->next;
+                    }
+                }
             
-            //print best match
-            printf("Best 5 matches are: \n\n");
-            for (int i = 0; i < 5; i++) {
-                printf("%d: %s\n",i, cm[i].word);
+                //print best match
+                printf("Best 5 matches are: \n\n");
+                for (int i = 0; i < 5; i++) {
+                    printf("%d: %s\n",i, cm[i].word);
+                }
+                printf("\n\n");
             }
-            printf("\n\n");
         }
 
-
-        
         if (strcmp(inputBuffer, "quit") == 0) {
             quit = 1;
         }
