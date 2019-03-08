@@ -139,10 +139,12 @@ int main(int argc, const char** argv)
         printf("Enter a word or \"quit\" to quit: ");
         scanf("%s", inputBuffer);
 
+        //check for special characters
+        
+
         //convert user input to lowercase
         for(int i = 0; i < strlen(inputBuffer); i++) {
             if (inputBuffer[i] >= 'A' && inputBuffer[i] <= 'Z') {
-
                 inputBuffer[i] = tolower(inputBuffer[i]);
             }
         }
