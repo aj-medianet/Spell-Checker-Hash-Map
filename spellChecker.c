@@ -21,9 +21,14 @@
 #define MIN3(a, b, c) ((a) < (b) ? ((a) < (c) ? (a) : (c)) : ((b) < (c) ? (b) : (c)))
 
 int levenshteinDistance(char *s1, char *s2) {
+    printf("in lev");
     unsigned int s1len, s2len, x, y, lastdiag, olddiag;
     s1len = strlen(s1);
     s2len = strlen(s2);
+
+    printf("st1: %d\n", s1len);
+    printf("st2: %d\n", s2len);
+
     unsigned int column[s1len+1];
     for (y = 1; y <= s1len; y++)
         column[y] = y;
@@ -133,13 +138,13 @@ int main(int argc, const char** argv)
     char inputBuffer[256];
     int quit = 0;
     int correctSpelling = 0;
-    while (!quit)
-    {
+    while (!quit) {
+
         printf("Enter a word or \"quit\" to quit: ");
         scanf("%s", inputBuffer);
 
         //check for special characters
-
+        /* to do */
 
         //convert user input to lowercase
         for(int i = 0; i < strlen(inputBuffer); i++) {
@@ -167,11 +172,16 @@ int main(int argc, const char** argv)
             /*loop through hash map and compare input to dictionary using levenshtein distance*/
             struct HashLink *cur;
 
-            for(int i = 0; i < hashMapCapacity(map); i++) {
+            for (int i = 0; i < hashMapCapacity(map); i++) {
                 printf("test\n");
                 cur = map->table[i];
                 printf("test1\n");
-                levDistance = levenshteinDistance(inputBuffer, cur->key);
+
+
+
+                levDistance = levenshteinDistance(inputBuffer, "poop");
+
+
                 printf("test2\n");
                 if (levDistance < min) {
                     printf("test3\n");
