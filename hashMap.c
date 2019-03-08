@@ -138,13 +138,8 @@ int* hashMapGet(HashMap* map, const char* key) {
     assert(map != NULL);
     assert(key != NULL);
     
-    /*
-    printf("Get Function Key:");
-    for (int i = 0; i < strlen(key); i++) {
-        printf(" %c", key[i]);
-    }
-    printf("\n\n");
-    */
+    //printf("Get Function Key:");
+     //printf("%s", key);
 
     //get hash index
     int hashIndex = abs(HASH_FUNCTION(key) % map->capacity);
@@ -220,15 +215,9 @@ void resizeTable(HashMap* map, int capacity) {
 void hashMapPut(HashMap* map, const char* key, int value) {
     assert(map != NULL);
     assert(key != NULL);
-    
-    /*
-    printf("Put Function Key:");
-    for (int i = 0; i < strlen(key); i++) {
-        printf("%c", key[i]);
-    }
-    printf("\n\n");
-    */
-    
+
+    //printf("Put Function Key:");
+    //printf("%s", key);
    
     //get hash index
     int hashIndex = abs(HASH_FUNCTION(key) % map->capacity);
@@ -320,12 +309,7 @@ void hashMapRemove(HashMap* map, const char* key) {
 int hashMapContainsKey(HashMap* map, const char* key) {
     assert(map != NULL);
     //printf("Contains Function Key:");
-    /*
-    for (int i = 0; i < strlen(key); i++) {
-        printf(" %c", key[i]);
-    }
-    printf("\n\n");
-    */
+    //printf("%s", key);
 
     //get hash index
     int hashIndex = abs(HASH_FUNCTION(key) % map->capacity);

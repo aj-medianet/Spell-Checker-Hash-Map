@@ -16,7 +16,7 @@
 
 
 struct ClosestMatches {
-    char* word;
+    char word[256];
     int lev_distance;
 };
 
@@ -126,16 +126,6 @@ int main(int argc, const char** argv)
     HashMap* map = hashMapNew(1000);
     struct ClosestMatches cm[5]; //array of 5 closest matches
     int ld = 0;
-    int min = 1000;
-    int max = 0;
-
-    //initialize lev distances
-    for(int i = 0; i < 5; i++) {
-        cm[i].lev_distance = 1000;
-        cm[i].word = NULL;
-    }
-
-    //char bestMatch[256]; //get rid of
     
     FILE* file = fopen("dictionary.txt", "r");
     clock_t timer = clock();
@@ -149,8 +139,10 @@ int main(int argc, const char** argv)
     int correctSpelling = 0;
     while (!quit) {
         ld = 0;
-        min = 1000;
-        max = 0;
+        //initialize lev distances
+        for(int i = 0; i < 5; i++) {
+            cm[i].lev_distance = 1000;
+        }
 
         printf("Enter a word or \"quit\" to quit: ");
         scanf("%s", inputBuffer);
@@ -189,25 +181,12 @@ int main(int argc, const char** argv)
                 while (cur != NULL) {
                     ld = getLevenshteinDistance(inputBuffer, cur->key);
 
-                    /*
-                    if (ld < min) {
-                        min = ld;
-                        strcpy(bestMatch, cur->key);
-                    }
-                    */
-
-                    printf("test\n");
                     //loop through array of ClosestMatches to check lev distances
                     for (int j = 0; j < 5; j++) {
-                        printf("test1\n");
-                        printf("lev_dist: %d\n", cm[j].lev_distance);
                         //if new lev distance is lower, add it to the array and break out of loop
                         if (ld < cm[j].lev_distance) {
-                            printf("test2\n");
                             strcpy(cm[j].word, cur->key);
-                            printf("test3\n");
-                            cm[i].lev_distance = ld;
-                            printf("test4\n");
+                            cm[j].lev_distance = ld;
                             break;
                         }
                     }
@@ -216,14 +195,12 @@ int main(int argc, const char** argv)
                 }
             }
             
-            /*
             //print best match
-            printf("best match: ");
-            for (int i = 0; i < strlen(bestMatch); i++) {
-                printf("%c", bestMatch[i]);
+            printf("Best 5 matches are: \n\n");
+            for (int i = 0; i < 5; i++) {
+                printf("%d: %s\n",i, cm[i].word);
             }
             printf("\n\n");
-            */
         }
 
 
