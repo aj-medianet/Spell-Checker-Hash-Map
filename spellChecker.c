@@ -176,7 +176,7 @@ int main(int argc, const char** argv)
 
                     if (levDistance < min) {
                         min = levDistance;
-                        strcpy(bestMatch, inputBuffer);
+                        strcpy(bestMatch, cur->key);
                     }
 
                     cur = cur->next;
