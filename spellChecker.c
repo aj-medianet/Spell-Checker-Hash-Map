@@ -15,12 +15,17 @@
 #include <ctype.h>
 
 
+struct ClosestMatches {
+    char* word;
+    int lev_distance;
+};
+
 
 //https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#C
 
 #define MIN3(a, b, c) ((a) < (b) ? ((a) < (c) ? (a) : (c)) : ((b) < (c) ? (b) : (c)))
 
-int levenshteinDistance(char *s1, char *s2) {
+int getLevenshteinDistance(char *s1, char *s2) {
     unsigned int s1len, s2len, x, y, lastdiag, olddiag;
     s1len = strlen(s1);
     s2len = strlen(s2);
@@ -119,11 +124,18 @@ int main(int argc, const char** argv)
 {
     // FIXME: implement
     HashMap* map = hashMapNew(1000);
-    char closestMatches[5][256]; //array of 5 closest matches
-    int levDistance = 0;
+    struct ClosestMatches cm[5]; //array of 5 closest matches
+    int ld = 0;
     int min = 1000;
+    int max = 0;
 
-    char bestMatch[100]; //get rid of
+    //initialize lev distances
+    for(int i = 0; i < 5; i++) {
+        cm[i].lev_distance = 1000;
+        cm[i].word = NULL;
+    }
+
+    //char bestMatch[256]; //get rid of
     
     FILE* file = fopen("dictionary.txt", "r");
     clock_t timer = clock();
@@ -136,6 +148,9 @@ int main(int argc, const char** argv)
     int quit = 0;
     int correctSpelling = 0;
     while (!quit) {
+        ld = 0;
+        min = 1000;
+        max = 0;
 
         printf("Enter a word or \"quit\" to quit: ");
         scanf("%s", inputBuffer);
@@ -162,7 +177,7 @@ int main(int argc, const char** argv)
         //else misspelled, find 5 closest words to suggest using levenshtein distance
         } else {
             printf("\nThe inputted word .... is spelled incorrectly\n");
-            printf("Did you mean...?\n");
+            printf("Did you mean...?\n\n");
 
             //find 5 closest words
 
@@ -172,23 +187,43 @@ int main(int argc, const char** argv)
             for (int i = 0; i < hashMapCapacity(map); i++) {
                 cur = map->table[i];
                 while (cur != NULL) {
-                    levDistance = levenshteinDistance(inputBuffer, cur->key);
+                    ld = getLevenshteinDistance(inputBuffer, cur->key);
 
-                    if (levDistance < min) {
-                        min = levDistance;
+                    /*
+                    if (ld < min) {
+                        min = ld;
                         strcpy(bestMatch, cur->key);
+                    }
+                    */
+
+                    printf("test\n");
+                    //loop through array of ClosestMatches to check lev distances
+                    for (int j = 0; j < 5; j++) {
+                        printf("test1\n");
+                        printf("lev_dist: %d\n", cm[j].lev_distance);
+                        //if new lev distance is lower, add it to the array and break out of loop
+                        if (ld < cm[j].lev_distance) {
+                            printf("test2\n");
+                            strcpy(cm[j].word, cur->key);
+                            printf("test3\n");
+                            cm[i].lev_distance = ld;
+                            printf("test4\n");
+                            break;
+                        }
                     }
 
                     cur = cur->next;
                 }
             }
             
+            /*
             //print best match
-            printf("best match:\n\n");
+            printf("best match: ");
             for (int i = 0; i < strlen(bestMatch); i++) {
                 printf("%c", bestMatch[i]);
             }
             printf("\n\n");
+            */
         }
 
 
