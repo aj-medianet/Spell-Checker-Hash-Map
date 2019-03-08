@@ -21,13 +21,9 @@
 #define MIN3(a, b, c) ((a) < (b) ? ((a) < (c) ? (a) : (c)) : ((b) < (c) ? (b) : (c)))
 
 int levenshteinDistance(char *s1, char *s2) {
-    printf("in lev\n");
     unsigned int s1len, s2len, x, y, lastdiag, olddiag;
     s1len = strlen(s1);
     s2len = strlen(s2);
-
-    printf("st1: %d\n", s1len);
-    printf("st2: %d\n", s2len);
 
     unsigned int column[s1len+1];
     for (y = 1; y <= s1len; y++)
