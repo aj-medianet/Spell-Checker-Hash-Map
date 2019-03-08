@@ -174,28 +174,17 @@ int main(int argc, const char** argv)
             struct HashLink *cur;
 
             for (int i = 0; i < hashMapCapacity(map); i++) {
-                printf("test\n");
                 cur = map->table[i];
                 while (cur != NULL) {
-                    printf("test1\n");
-                    levDistance = levenshteinDistance(inputBuffer, "poop");
+                    levDistance = levenshteinDistance(inputBuffer, cur->key);
 
-
-                    printf("test2\n");
                     if (levDistance < min) {
-                        printf("test3\n");
                         min = levDistance;
                         strcpy(bestMatch, inputBuffer);
                     }
 
                     cur = cur->next;
                 }
-
-                
-
-                printf("string length: %d",strlen(cur->key));
-
-                
             }
             
             //print best match
