@@ -123,7 +123,7 @@ int main(int argc, const char** argv)
     int levDistance = 0;
     int min = 1000;
 
-    char bestMatch[100];
+    char bestMatch[100]; //get rid of
     
     FILE* file = fopen("dictionary.txt", "r");
     clock_t timer = clock();
