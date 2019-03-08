@@ -160,6 +160,13 @@ int main(int argc, const char** argv)
     int quit = 0;
     int correctSpelling = 0;
 
+    char tmpWord[256];
+    int tmpLev = 0;
+    char tmpWordTwo[256];
+    int tmpLevTwo = 0;
+
+    int k = 0;
+
     while (!quit) {  
         printf("Enter a word or \"quit\" to quit: ");
         scanf("%s", inputBuffer);
@@ -205,8 +212,39 @@ int main(int argc, const char** argv)
                         for (int j = 0; j < 5; j++) {
                             //if new lev distance is lower, add it to the array and break out of loop
                             if (ld < cm[j].lev_distance) {
+                                //copy current word to tmp variable to check against the rest of array
+                                strcpy(tmpWord, cm[j].word);
+                                tmpLev = cm[j].lev_distance;
+
+                                //assign new word to spot in array
                                 strcpy(cm[j].word, cur->key);
                                 cm[j].lev_distance = ld;
+
+                                //check swapped word against other spots
+                                k = 0;
+                                while(k < 5) {
+                                    //if tmp is less than index lev dis, swap and go through array again
+                                    if(tmpLev < cm[k].lev_distance) {
+                                        //copy word to tmp2
+                                        strcpy(tmpWordTwo, cm[k].word);
+                                        tmpLevTwo = cm[k].lev_distance;
+
+                                        //cpy tmp to word
+                                        strcpy(cm[k].word, tmpWord);
+                                        cm[k].lev_distance = tmpLev;
+
+                                        //cpy tmp2 to tmp 
+                                        strcpy(tmpWordTwo, tmpWordTwo);
+                                        tmpLev = tmpLevTwo;
+
+                                        //set k to 0 to run again
+                                        k = 0;
+                                    }
+                                    
+                                    k++;
+                                }
+
+
                                 break;
                             }
                         }
