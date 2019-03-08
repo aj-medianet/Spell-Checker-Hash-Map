@@ -240,7 +240,7 @@ int main(int argc, const char** argv)
                                         //set k to 0 to run again
                                         k = 0;
                                     }
-                                    
+                                    //if tmp is greater than index lev, move to next index in array
                                     k++;
                                 }
 
