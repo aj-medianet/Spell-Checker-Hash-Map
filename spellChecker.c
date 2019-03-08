@@ -39,7 +39,6 @@ int levenshteinDistance(char *s1, char *s2) {
 }
 
 
-
 /**
  * Allocates a string for the next word in the file and returns it. This string
  * is null terminated. Returns NULL after reaching the end of the file.
@@ -140,7 +139,7 @@ int main(int argc, const char** argv)
         scanf("%s", inputBuffer);
 
         //check for special characters
-        
+
 
         //convert user input to lowercase
         for(int i = 0; i < strlen(inputBuffer); i++) {
