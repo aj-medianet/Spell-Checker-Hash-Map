@@ -234,7 +234,7 @@ int main(int argc, const char** argv)
                                         cm[k].lev_distance = tmpLev;
 
                                         //cpy tmp2 to tmp 
-                                        strcpy(tmpWordTwo, tmpWordTwo);
+                                        strcpy(tmpWord, tmpWordTwo);
                                         tmpLev = tmpLevTwo;
 
                                         //set k to 0 to run again
