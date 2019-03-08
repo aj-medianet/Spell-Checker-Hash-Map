@@ -159,6 +159,7 @@ int main(int argc, const char** argv)
     char inputBuffer[256];
     int quit = 0;
     int correctSpelling = 0;
+
     while (!quit) {  
         printf("Enter a word or \"quit\" to quit: ");
         scanf("%s", inputBuffer);
@@ -177,8 +178,6 @@ int main(int argc, const char** argv)
                     inputBuffer[i] = tolower(inputBuffer[i]);
                 }
             }
-        
-            // Implement the spell checker code here..
 
             //check to see if word is in the hash map
             correctSpelling = hashMapContainsKey(map, inputBuffer);
@@ -216,8 +215,7 @@ int main(int argc, const char** argv)
                     }
                 }
             
-                //print best match
-                printf("Best 5 matches are: \n\n");
+                //print best/closest match
                 for (int i = 0; i < 5; i++) {
                     printf("%d: %s\n",i, cm[i].word);
                 }
