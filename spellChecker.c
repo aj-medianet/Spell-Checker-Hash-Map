@@ -21,7 +21,7 @@
 #define MIN3(a, b, c) ((a) < (b) ? ((a) < (c) ? (a) : (c)) : ((b) < (c) ? (b) : (c)))
 
 int levenshteinDistance(char *s1, char *s2) {
-    printf("in lev");
+    printf("in lev\n");
     unsigned int s1len, s2len, x, y, lastdiag, olddiag;
     s1len = strlen(s1);
     s2len = strlen(s2);
@@ -40,6 +40,7 @@ int levenshteinDistance(char *s1, char *s2) {
             lastdiag = olddiag;
         }
     }
+    printf("");
     return(column[s1len]);
 }
 
@@ -175,19 +176,26 @@ int main(int argc, const char** argv)
             for (int i = 0; i < hashMapCapacity(map); i++) {
                 printf("test\n");
                 cur = map->table[i];
-                printf("test1\n");
+                while (cur != NULL) {
+                    printf("test1\n");
+                    levDistance = levenshteinDistance(inputBuffer, "poop");
 
 
+                    printf("test2\n");
+                    if (levDistance < min) {
+                        printf("test3\n");
+                        min = levDistance;
+                        strcpy(bestMatch, inputBuffer);
+                    }
 
-                levDistance = levenshteinDistance(inputBuffer, "poop");
-
-
-                printf("test2\n");
-                if (levDistance < min) {
-                    printf("test3\n");
-                    min = levDistance;
-                    strcpy(bestMatch, inputBuffer);
+                    cur = cur->next;
                 }
+
+                
+
+                printf("string length: %d",strlen(cur->key));
+
+                
             }
             
             //print best match
