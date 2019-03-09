@@ -125,8 +125,8 @@ void loadDictionary(FILE* file, HashMap* map) {
 */
 int getValidInput(char* inputBuffer) {
     for(int i = 0; i < strlen(inputBuffer); i++) {
-        if(inputBuffer[i] < 65 || (inputBuffer[i] > 90 && inputBuffer[i] < 97) || inputBuffer[i] > 122 ) {
-            printf("\n\n*** Invalid Input, only user letters ***\n\n");
+        if( inputBuffer[i] < 65 || (inputBuffer[i] > 90 && inputBuffer[i] < 97) || inputBuffer[i] > 122 || isspace(inputBuffer[i]) ) {
+            printf("\n\n*** Invalid Input, only use letters ***\n\n");
             return 0;
         }
     }
@@ -168,6 +168,7 @@ int main(int argc, const char** argv)
     int k = 0;
 
     while (!quit) {  
+        fflush(stdin);
         printf("Enter a word or \"quit\" to quit: ");
         scanf("%s", inputBuffer);
         validInput = getValidInput(inputBuffer); //check for special characters
@@ -239,9 +240,11 @@ int main(int argc, const char** argv)
 
                                         //set k to 0 to run again
                                         k = 0;
+                                    } else {
+                                        //if tmp is greater than index lev, move to next index in array
+                                        k++;
                                     }
-                                    //if tmp is greater than index lev, move to next index in array
-                                    k++;
+                                    
                                 }
 
 
@@ -255,7 +258,7 @@ int main(int argc, const char** argv)
             
                 //print best/closest match
                 for (int i = 0; i < 5; i++) {
-                    printf("%d: %s\n",i, cm[i].word);
+                    printf("%d: %s levD: %d\n",i, cm[i].word, cm[i].lev_distance);
                 }
                 printf("\n\n");
             }
