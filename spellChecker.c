@@ -160,9 +160,9 @@ int main(int argc, const char** argv)
     int quit = 0;
     int correctSpelling = 0;
 
-    char tmpWord[256];
+    char tmpWord[256] = "t";
     int tmpLev = 0;
-    char tmpWordTwo[256];
+    char tmpWordTwo[256] = "t";
     int tmpLevTwo = 0;
 
     int k = 0;
@@ -246,7 +246,7 @@ int main(int argc, const char** argv)
                                     }
                                     
                                 }
-                                
+
                                 break;
                             }
                         }

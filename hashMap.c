@@ -97,6 +97,7 @@ void hashMapCleanUp(HashMap* map) {
             map->size--;
         }
     }
+    free(map->table);
 }
 
 /**
