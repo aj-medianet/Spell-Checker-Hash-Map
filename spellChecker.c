@@ -246,8 +246,7 @@ int main(int argc, const char** argv)
                                     }
                                     
                                 }
-
-
+                                
                                 break;
                             }
                         }
@@ -258,7 +257,7 @@ int main(int argc, const char** argv)
             
                 //print best/closest match
                 for (int i = 0; i < 5; i++) {
-                    printf("%d: %s levD: %d\n",i, cm[i].word, cm[i].lev_distance);
+                    printf("%s\n", cm[i].word);
                 }
                 printf("\n\n");
             }
