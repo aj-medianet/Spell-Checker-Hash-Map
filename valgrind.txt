@@ -1,0 +1,324 @@
+flip3 ~/cs261/ass5 164% valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --gen-suppressions=all ./prog
+==21007== Memcheck, a memory error detector
+==21007== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==21007== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==21007== Command: ./prog
+==21007== 
+Opening file: input1.txt
+==21007== Invalid free() / delete / delete[] / realloc()
+==21007==    at 0x4C2AD1D: free (vg_replace_malloc.c:530)
+==21007==    by 0x400AA6: main (main.c:101)
+==21007==  Address 0x40159f is in a r-x mapped file /nfs/stak/users/josephan/cs261/ass5/prog segment
+==21007== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Free
+   fun:free
+   fun:main
+}
+Closing file: input1.txt
+
+Ran in 0.050000 seconds
+Empty buckets: 37
+Number of links: 63
+Number of buckets: 80
+Table load: 0.787500
+==21007== 
+==21007== HEAP SUMMARY:
+==21007==     in use at exit: 1,200 bytes in 4 blocks
+==21007==   total heap usage: 364 allocs, 361 frees, 7,181 bytes allocated
+==21007== 
+==21007== 80 bytes in 1 blocks are definitely lost in loss record 1 of 2
+==21007==    at 0x4C29C23: malloc (vg_replace_malloc.c:299)
+==21007==    by 0x400D1C: hashMapInit (hashMap.c:72)
+==21007==    by 0x400E1E: hashMapNew (hashMap.c:111)
+==21007==    by 0x400A30: main (main.c:81)
+==21007== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:hashMapInit
+   fun:hashMapNew
+   fun:main
+}
+==21007== 1,120 bytes in 3 blocks are definitely lost in loss record 2 of 2
+==21007==    at 0x4C29C23: malloc (vg_replace_malloc.c:299)
+==21007==    by 0x400D1C: hashMapInit (hashMap.c:72)
+==21007==    by 0x400F86: resizeTable (hashMap.c:179)
+==21007==    by 0x4011F5: hashMapPut (hashMap.c:258)
+==21007==    by 0x400A9A: main (main.c:98)
+==21007== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:hashMapInit
+   fun:resizeTable
+   fun:hashMapPut
+   fun:main
+}
+==21007== LEAK SUMMARY:
+==21007==    definitely lost: 1,200 bytes in 4 blocks
+==21007==    indirectly lost: 0 bytes in 0 blocks
+==21007==      possibly lost: 0 bytes in 0 blocks
+==21007==    still reachable: 0 bytes in 0 blocks
+==21007==         suppressed: 0 bytes in 0 blocks
+==21007== 
+==21007== For counts of detected and suppressed errors, rerun with: -v
+==21007== ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
+flip3 ~/cs261/ass5 165% 
+flip3 ~/cs261/ass5 165% 
+flip3 ~/cs261/ass5 165% 
+flip3 ~/cs261/ass5 165% 
+flip3 ~/cs261/ass5 165% 
+flip3 ~/cs261/ass5 165% valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --gen-suppressions=all ./tests
+==22313== Memcheck, a memory error detector
+==22313== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==22313== Using Valgrind-3.13.0 and LibVEX; rerun with -h for copyright info
+==22313== Command: ./tests
+==22313== 
+
+--- Testing single-link chains under threshold ---
+
+After adding all key-value pairs:2 3 4 0 1 
+
+
+After removing all key-value pairs:
+
+
+--- Testing single-link chains over threshold ---
+
+After adding all key-value pairs:0 1 2 3 4 
+
+
+After removing all key-value pairs:
+
+
+--- Testing multiple-link chains under threshold ---
+
+After adding all key-value pairs:3 0 2 4 1 
+
+
+After removing all key-value pairs:
+
+
+--- Testing multiple-link chains over threshold ---
+
+After adding all key-value pairs:0 1 2 3 4 
+
+
+After removing all key-value pairs:
+
+
+--- Testing value updates ---
+
+After adding all key-value pairs:3 1 2 4 
+
+
+.....
+
+OK (5 tests)
+
+==22313== 
+==22313== HEAP SUMMARY:
+==22313==     in use at exit: 520 bytes in 14 blocks
+==22313==   total heap usage: 155 allocs, 141 frees, 11,310 bytes allocated
+==22313== 
+==22313== 8 bytes in 1 blocks are definitely lost in loss record 1 of 8
+==22313==    at 0x4C29C23: malloc (vg_replace_malloc.c:299)
+==22313==    by 0x401AEA: hashMapInit (hashMap.c:72)
+==22313==    by 0x401BEC: hashMapNew (hashMap.c:111)
+==22313==    by 0x400BCF: testCase (tests.c:125)
+==22313==    by 0x401465: testSingleOver (tests.c:260)
+==22313==    by 0x402839: CuTestRun (CuTest.c:163)
+==22313==    by 0x402ED3: CuSuiteRun (CuTest.c:323)
+==22313==    by 0x401910: main (tests.c:358)
+==22313== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:hashMapInit
+   fun:hashMapNew
+   fun:testCase
+   fun:testSingleOver
+   fun:CuTestRun
+   fun:CuSuiteRun
+   fun:main
+}
+==22313== 8 bytes in 1 blocks are definitely lost in loss record 2 of 8
+==22313==    at 0x4C29C23: malloc (vg_replace_malloc.c:299)
+==22313==    by 0x401AEA: hashMapInit (hashMap.c:72)
+==22313==    by 0x401BEC: hashMapNew (hashMap.c:111)
+==22313==    by 0x400BCF: testCase (tests.c:125)
+==22313==    by 0x40161F: testMultipleOver (tests.c:298)
+==22313==    by 0x402839: CuTestRun (CuTest.c:163)
+==22313==    by 0x402ED3: CuSuiteRun (CuTest.c:323)
+==22313==    by 0x401910: main (tests.c:358)
+==22313== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:hashMapInit
+   fun:hashMapNew
+   fun:testCase
+   fun:testMultipleOver
+   fun:CuTestRun
+   fun:CuSuiteRun
+   fun:main
+}
+==22313== 8 bytes in 1 blocks are definitely lost in loss record 3 of 8
+==22313==    at 0x4C29C23: malloc (vg_replace_malloc.c:299)
+==22313==    by 0x401AEA: hashMapInit (hashMap.c:72)
+==22313==    by 0x401BEC: hashMapNew (hashMap.c:111)
+==22313==    by 0x4016C7: testValueUpdate (tests.c:318)
+==22313==    by 0x402839: CuTestRun (CuTest.c:163)
+==22313==    by 0x402ED3: CuSuiteRun (CuTest.c:323)
+==22313==    by 0x401910: main (tests.c:358)
+==22313== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:hashMapInit
+   fun:hashMapNew
+   fun:testValueUpdate
+   fun:CuTestRun
+   fun:CuSuiteRun
+   fun:main
+}
+==22313== 80 bytes in 1 blocks are definitely lost in loss record 4 of 8
+==22313==    at 0x4C29C23: malloc (vg_replace_malloc.c:299)
+==22313==    by 0x401AEA: hashMapInit (hashMap.c:72)
+==22313==    by 0x401BEC: hashMapNew (hashMap.c:111)
+==22313==    by 0x400BCF: testCase (tests.c:125)
+==22313==    by 0x401388: testSingleUnder (tests.c:241)
+==22313==    by 0x402839: CuTestRun (CuTest.c:163)
+==22313==    by 0x402ED3: CuSuiteRun (CuTest.c:323)
+==22313==    by 0x401910: main (tests.c:358)
+==22313== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:hashMapInit
+   fun:hashMapNew
+   fun:testCase
+   fun:testSingleUnder
+   fun:CuTestRun
+   fun:CuSuiteRun
+   fun:main
+}
+==22313== 80 bytes in 1 blocks are definitely lost in loss record 5 of 8
+==22313==    at 0x4C29C23: malloc (vg_replace_malloc.c:299)
+==22313==    by 0x401AEA: hashMapInit (hashMap.c:72)
+==22313==    by 0x401BEC: hashMapNew (hashMap.c:111)
+==22313==    by 0x400BCF: testCase (tests.c:125)
+==22313==    by 0x401542: testMultipleUnder (tests.c:279)
+==22313==    by 0x402839: CuTestRun (CuTest.c:163)
+==22313==    by 0x402ED3: CuSuiteRun (CuTest.c:323)
+==22313==    by 0x401910: main (tests.c:358)
+==22313== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:hashMapInit
+   fun:hashMapNew
+   fun:testCase
+   fun:testMultipleUnder
+   fun:CuTestRun
+   fun:CuSuiteRun
+   fun:main
+}
+==22313== 112 bytes in 3 blocks are definitely lost in loss record 6 of 8
+==22313==    at 0x4C29C23: malloc (vg_replace_malloc.c:299)
+==22313==    by 0x401AEA: hashMapInit (hashMap.c:72)
+==22313==    by 0x401D54: resizeTable (hashMap.c:179)
+==22313==    by 0x401FC3: hashMapPut (hashMap.c:258)
+==22313==    by 0x400C2D: testCase (tests.c:131)
+==22313==    by 0x401465: testSingleOver (tests.c:260)
+==22313==    by 0x402839: CuTestRun (CuTest.c:163)
+==22313==    by 0x402ED3: CuSuiteRun (CuTest.c:323)
+==22313==    by 0x401910: main (tests.c:358)
+==22313== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:hashMapInit
+   fun:resizeTable
+   fun:hashMapPut
+   fun:testCase
+   fun:testSingleOver
+   fun:CuTestRun
+   fun:CuSuiteRun
+   fun:main
+}
+==22313== 112 bytes in 3 blocks are definitely lost in loss record 7 of 8
+==22313==    at 0x4C29C23: malloc (vg_replace_malloc.c:299)
+==22313==    by 0x401AEA: hashMapInit (hashMap.c:72)
+==22313==    by 0x401D54: resizeTable (hashMap.c:179)
+==22313==    by 0x401FC3: hashMapPut (hashMap.c:258)
+==22313==    by 0x400C2D: testCase (tests.c:131)
+==22313==    by 0x40161F: testMultipleOver (tests.c:298)
+==22313==    by 0x402839: CuTestRun (CuTest.c:163)
+==22313==    by 0x402ED3: CuSuiteRun (CuTest.c:323)
+==22313==    by 0x401910: main (tests.c:358)
+==22313== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:hashMapInit
+   fun:resizeTable
+   fun:hashMapPut
+   fun:testCase
+   fun:testMultipleOver
+   fun:CuTestRun
+   fun:CuSuiteRun
+   fun:main
+}
+==22313== 112 bytes in 3 blocks are definitely lost in loss record 8 of 8
+==22313==    at 0x4C29C23: malloc (vg_replace_malloc.c:299)
+==22313==    by 0x401AEA: hashMapInit (hashMap.c:72)
+==22313==    by 0x401D54: resizeTable (hashMap.c:179)
+==22313==    by 0x401FC3: hashMapPut (hashMap.c:258)
+==22313==    by 0x401723: testValueUpdate (tests.c:323)
+==22313==    by 0x402839: CuTestRun (CuTest.c:163)
+==22313==    by 0x402ED3: CuSuiteRun (CuTest.c:323)
+==22313==    by 0x401910: main (tests.c:358)
+==22313== 
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: definite
+   fun:malloc
+   fun:hashMapInit
+   fun:resizeTable
+   fun:hashMapPut
+   fun:testValueUpdate
+   fun:CuTestRun
+   fun:CuSuiteRun
+   fun:main
+}
+==22313== LEAK SUMMARY:
+==22313==    definitely lost: 520 bytes in 14 blocks
+==22313==    indirectly lost: 0 bytes in 0 blocks
+==22313==      possibly lost: 0 bytes in 0 blocks
+==22313==    still reachable: 0 bytes in 0 blocks
+==22313==         suppressed: 0 bytes in 0 blocks
+==22313== 
+==22313== For counts of detected and suppressed errors, rerun with: -v
+==22313== ERROR SUMMARY: 8 errors from 8 contexts (suppressed: 0 from 0)
