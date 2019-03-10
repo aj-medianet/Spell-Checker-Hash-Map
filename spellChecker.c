@@ -171,6 +171,7 @@ int main(int argc, const char** argv)
     char garbage;
 
     int k = 0;
+    int charPosition = 0;
 
     while (!quit) {  
         fflush(stdin);
@@ -180,7 +181,8 @@ int main(int argc, const char** argv)
         //clear input buffer
         garbage = 0;
         while((garbage = getchar()) != '\n' && garbage != EOF) {
-            inputString = garbage;
+            inputString[charPosition] = garbage;
+            charPosition++;
         }
 
 
