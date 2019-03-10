@@ -112,9 +112,10 @@ void loadDictionary(FILE* file, HashMap* map) {
         } else {
             hashMapPut(map, nxtWord, 1);
         }
-
+        free(nxtWord);
         nxtWord = nextWord(file);
     }
+
     //hashMapPrint(map);
 }
 
@@ -125,10 +126,12 @@ void loadDictionary(FILE* file, HashMap* map) {
 */
 int getValidInput(char* inputBuffer) {
     for(int i = 0; i < strlen(inputBuffer); i++) {
-        if( inputBuffer[i] < 65 || (inputBuffer[i] > 90 && inputBuffer[i] < 97) || inputBuffer[i] > 122 || isspace(inputBuffer[i]) ) {
+        if( inputBuffer[i] < 65 || (inputBuffer[i] > 90 && inputBuffer[i] < 97) || inputBuffer[i] > 122 || isspace(inputBuffer[i] || inputBuffer[i] == '\n') ) {
             printf("\n\n*** Invalid Input, only use letters ***\n\n");
             return 0;
         }
+
+        
     }
     return 1;
 }
@@ -160,10 +163,11 @@ int main(int argc, const char** argv)
     int quit = 0;
     int correctSpelling = 0;
 
-    char tmpWord[256] = "t";
+    char tmpWord[256] = "hi";
     int tmpLev = 0;
-    char tmpWordTwo[256] = "t";
+    char tmpWordTwo[256] = "hi";
     int tmpLevTwo = 0;
+    char garbage;
 
     int k = 0;
 
@@ -171,6 +175,7 @@ int main(int argc, const char** argv)
         fflush(stdin);
         printf("Enter a word or \"quit\" to quit: ");
         scanf("%s", inputBuffer);
+
         validInput = getValidInput(inputBuffer); //check for special characters
 
         if (validInput) {
@@ -265,6 +270,12 @@ int main(int argc, const char** argv)
 
         if (strcmp(inputBuffer, "quit") == 0) {
             quit = 1;
+        }
+
+        //clear input buffer
+        garbage = 0;
+        while((garbage = getchar()) != '\n' && garbage != EOF) {
+
         }
     }
 

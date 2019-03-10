@@ -83,7 +83,7 @@ int main(int argc, const char** argv)
         // --- Concordance code begins here ---
 
         //set nextWord to first word in file, declare value to NULL to use in loop
-        char* nxtWord = "nextWord(inFile)";
+        char* nxtWord = nextWord(inFile);
         int* value = NULL;
 
         while (nxtWord != NULL) {
@@ -103,6 +103,21 @@ int main(int argc, const char** argv)
         }
         printf("Closing file: %s\n", fileName);
         fclose(inFile);
+
+        //print all words and occurrences counts
+        struct HashLink *cur;
+
+        //loop through hash map and print each word & it's value
+        for (int i = 0; i < hashMapCapacity(map); i++) {
+            cur = map->table[i];
+            printf("Bucket %d  ->",i);
+            while (cur != NULL) {
+                printf(" (%s, %d) ->", cur->key, cur->value);
+                cur = cur->next;
+            }
+            printf("\n");
+        }   
+
 
         // --- Concordance code ends here ---
     
