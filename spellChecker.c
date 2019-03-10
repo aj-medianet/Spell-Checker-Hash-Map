@@ -180,7 +180,7 @@ int main(int argc, const char** argv)
         //clear input buffer
         garbage = 0;
         while((garbage = getchar()) != '\n' && garbage != EOF) {
-            
+            inputString = garbage;
         }
 
 
