@@ -160,6 +160,7 @@ int main(int argc, const char** argv)
     fclose(file);
     
     char inputBuffer[256];
+    char inputString[256];
     int quit = 0;
     int correctSpelling = 0;
 
@@ -175,6 +176,13 @@ int main(int argc, const char** argv)
         fflush(stdin);
         printf("Enter a word or \"quit\" to quit: ");
         scanf("%s", inputBuffer);
+
+        //clear input buffer
+        garbage = 0;
+        while((garbage = getchar()) != '\n' && garbage != EOF) {
+            
+        }
+
 
         validInput = getValidInput(inputBuffer); //check for special characters
 
@@ -271,12 +279,8 @@ int main(int argc, const char** argv)
         if (strcmp(inputBuffer, "quit") == 0) {
             quit = 1;
         }
-
-        //clear input buffer
-        garbage = 0;
-        while((garbage = getchar()) != '\n' && garbage != EOF) {
-
-        }
+        
+        
     }
 
     printf("Goodbye\n");
