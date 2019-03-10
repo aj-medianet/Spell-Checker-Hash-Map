@@ -163,9 +163,9 @@ int main(int argc, const char** argv)
     int quit = 0;
     int correctSpelling = 0;
 
-    char tmpWord[256] = "hi";
+    char tmpWord[256];
     int tmpLev = 0;
-    char tmpWordTwo[256] = "hi";
+    char tmpWordTwo[256];
     int tmpLevTwo = 0;
     char inputChar = 0;
 
@@ -177,21 +177,24 @@ int main(int argc, const char** argv)
         printf("Enter a word or \"quit\" to quit: ");
         scanf("%s", inputBuffer);
 
-        //check input buffer for multiple words
+        //feeds potential space character into inputBuffer to check for
         inputChar = 0;
         charPosition = strlen(inputBuffer);
         while((inputChar = getchar()) != '\n' && inputChar != EOF) {
             inputBuffer[charPosition] = inputChar;
+            inputBuffer[charPosition + 1] = '\0';
             charPosition++;
         }
 
-        validInput = getValidInput(inputBuffer); //check for special characters
+        //check for special characters & spaces
+        validInput = getValidInput(inputBuffer); 
 
         if (validInput) {
             //initialize lev distances
             ld = 0; //reset ld
             for(int i = 0; i < 5; i++) {
                 cm[i].lev_distance = 1000;
+                cm[i].word[0] = '\0';
             }
 
             //convert user input to lowercase
