@@ -168,7 +168,7 @@ int main(int argc, const char** argv)
     int tmpLev = 0;
     char tmpWordTwo[256] = "hi";
     int tmpLevTwo = 0;
-    char garbage;
+    char inputChar = 0;
 
     int k = 0;
     int charPosition = 0;
@@ -179,10 +179,10 @@ int main(int argc, const char** argv)
         scanf("%s", inputBuffer);
 
         //clear input buffer
-        garbage = 0;
+        inputChar = 0;
         charPosition = 0;
-        while((garbage = getchar()) != '\n' && garbage != EOF) {
-            inputString[charPosition] = garbage;
+        while((inputChar = getchar()) != '\n' && inputChar != EOF) {
+            inputString[charPosition] = inputChar;
             charPosition++;
         }
 
