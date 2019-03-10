@@ -127,7 +127,7 @@ void loadDictionary(FILE* file, HashMap* map) {
 int getValidInput(char* inputBuffer) {
     for(int i = 0; i < strlen(inputBuffer); i++) {
         if( inputBuffer[i] < 65 || (inputBuffer[i] > 90 && inputBuffer[i] < 97) || inputBuffer[i] > 122 || isspace(inputBuffer[i] || inputBuffer[i] == '\n') ) {
-            printf("\n\n*** Invalid Input, only use letters ***\n\n");
+            printf("\n\n*** Invalid Input. Only 1 word with letters allowed. ***\n\n");
             return 0;
         }
 
@@ -160,7 +160,6 @@ int main(int argc, const char** argv)
     fclose(file);
     
     char inputBuffer[256];
-    char inputString[256];
     int quit = 0;
     int correctSpelling = 0;
 
@@ -178,14 +177,13 @@ int main(int argc, const char** argv)
         printf("Enter a word or \"quit\" to quit: ");
         scanf("%s", inputBuffer);
 
-        //clear input buffer
+        //check input buffer for multiple words
         inputChar = 0;
-        charPosition = 0;
+        charPosition = strlen(inputBuffer);
         while((inputChar = getchar()) != '\n' && inputChar != EOF) {
-            inputString[charPosition] = inputChar;
+            inputBuffer[charPosition] = inputChar;
             charPosition++;
         }
-
 
         validInput = getValidInput(inputBuffer); //check for special characters
 
